@@ -1,18 +1,46 @@
-<table border="1">
-    <tr>
-        <th>SN</th>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Update</th>
-    </tr>
-    <tr *ngFor="let user of users; index as i">
-        <td>{{i+1}}</td>
-        <td>{{user.username}}</td>
-        <td><select [(ngModel)]="user.role">
-            <option  value="ROLE_stu">Student</option>
-            <option  value="ROLE_staff">Staff</option>
-            <option  value="ROLE_admin">Admin</option>
-        </select></td>
-        <td><button [disabled]="disable" (click)="update(user.username,user.role)">Update</button></td>
-    </tr>
-</table>
+<div class="card">
+  <div class="card-header">
+    <h2>User Role Management</h2>
+    <p class="subtitle">Change user roles to manage access permissions</p>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; index as i">
+          <td>{{i+1}}</td>
+          <td>{{user.username}}</td>
+          <td>
+            <select class="form-control role-select" [(ngModel)]="user.role">
+              <option value="ROLE_stu">Student</option>
+              <option value="ROLE_staff">Staff</option>
+              <option value="ROLE_admin">Admin</option>
+            </select>
+          </td>
+          <td>
+            <button class="btn btn-primary" [disabled]="disable" (click)="update(user.username,user.role)">
+              <span *ngIf="!disable">Update</span>
+              <span *ngIf="disable">Updating...</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="data" class="alert" [ngClass]="{'alert-success': data.includes('success'), 'alert-error': data.includes('error')}">
+    {{ data }}
+  </div>
+  
+  <div *ngIf="users.length === 0" class="empty-state">
+    <p>No users found in the system</p>
+  </div>
+</div>

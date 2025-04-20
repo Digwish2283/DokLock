@@ -1,4 +1,14 @@
-<!--<p>student works!</p>
-<button [routerLink]="['uploadFile']" style=margin-right:1cm;>Upload File</button>
--->
-<router-outlet></router-outlet>
+<div class="app-header">
+  <div class="app-title">DokLock - A Digital Locker</div>
+  <div class="nav-tabs">
+    <button class="btn btn-outline mr-1" [routerLink]="['uploadFile']">Upload Documents</button>
+    <button class="btn btn-outline" [routerLink]="['retrieveFile']">View Documents</button>
+  </div>
+  <div>
+    <button class="btn btn-accent" [routerLink]="['/']">Logout</button>
+  </div>
+</div>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

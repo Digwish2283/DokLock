@@ -90,6 +90,46 @@ input[type="text"] {
   color: white;
 }
 
+.document-preview {
+  background-color: var(--background-color);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.preview-image {
+  display: flex;
+  justify-content: center;
+  background-color: var(--card-color);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .preview-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 @media screen and (min-width: 600px) {
   .main {
     width: 70%;

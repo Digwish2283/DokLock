@@ -1,3 +1,19 @@
-<p>student-retrieve-file works!</p>
-<img src="{{file}}">
-{{file}}
+<div class="container">
+  <div class="card">
+    <h2>Document Viewer</h2>
+    
+    <div class="document-container mt-3" *ngIf="file">
+      <div class="document-preview">
+        <img [src]="file" alt="Document" class="document-image">
+      </div>
+      <div class="document-actions mt-2">
+        <button class="btn btn-primary" (click)="downloadDocument()">Download</button>
+        <button class="btn btn-outline" (click)="goBack()">Back</button>
+      </div>
+    </div>
+    
+    <div class="no-document" *ngIf="!file">
+      <p class="text-center">No document selected or available for viewing.</p>
+    </div>
+  </div>
+</div>

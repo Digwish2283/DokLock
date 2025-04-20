@@ -11,6 +11,8 @@ import { User } from '../user';
 export class AdminDeleteUserComponent implements OnInit {
   users:User[]=[];
   disable:boolean=false;
+  data: string = ''; // Added missing data property
+  
   constructor(private http: HttpClient) {
     var t='Bearer '+JwtToken.jwt;
     let headers = new HttpHeaders().set("Authorization", t);
@@ -34,10 +36,18 @@ export class AdminDeleteUserComponent implements OnInit {
      let headers = new HttpHeaders().set("Authorization", t);
     //  headers.set('Content-Type', 'application/json');
 
-     this.http.post("http://localhost:8080/admin/changeStatus",obj,{headers:headers}).subscribe((data:any)=>{
-         this.users=data;
+     this.http.post("http://localhost:8080/admin/changeStatus",obj,{headers:headers}).subscribe(
+       (response:any) => {
+         this.users=response;
          this.disable=false;
-       });
+         this.data = `User status updated successfully`;
+       },
+       (error) => {
+         console.error('Error updating user status:', error);
+         this.disable=false;
+         this.data = `Error updating user status`;
+       }
+     );
     } 
   }
 

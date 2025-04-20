@@ -1,5 +1,26 @@
-<button [routerLink]="['/']" style="position: absolute;top: 1px;right: 5px;background: blue;">Logout</button>
-<button [routerLink]="['changeRole']" style=margin-right:1cm;>Change Role</button>
-<button [routerLink]="['deleteUser']" style=margin-right:1cm;>Delete User</button>
+<div class="app-header">
+  <div class="app-title">DokLock - A Digital Locker</div>
+  <div>
+    <button class="btn btn-accent" [routerLink]="['/']">Logout</button>
+  </div>
+</div>
 
-<router-outlet></router-outlet>
+<div class="admin-container">
+  <div class="admin-sidebar">
+    <div class="admin-menu">
+      <h3>Admin Dashboard</h3>
+      <div class="admin-menu-item" [routerLink]="['changeRole']" [routerLinkActive]="'active'">
+        <i class="admin-icon">👤</i>
+        <span>Change Role</span>
+      </div>
+      <div class="admin-menu-item" [routerLink]="['deleteUser']" [routerLinkActive]="'active'">
+        <i class="admin-icon">🔒</i>
+        <span>Manage Users</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="admin-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

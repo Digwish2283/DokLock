@@ -21,21 +21,20 @@ export class StudentUploadFileComponent implements OnInit {
 
     var t='Bearer '+JwtToken.jwt;
     let headers = new HttpHeaders().set("Authorization", t);
-   console.log(JwtToken.username +"us");
+    console.log(JwtToken.username +"us");
     http.post("http://localhost:8080/student/getFiles/"+JwtToken.username,"",{headers:headers}).subscribe((data:any)=>{
       this.filesArr=Object.values(data) ;
     });
   }
+  
   ngOnInit(): void {
   }
-event:any;
+
+  event:any;
   submit(event:any){
     var t='Bearer '+JwtToken.jwt;
     let headers = new HttpHeaders().set("Authorization", t);
-    // headers.set('Content-Type', 'multipart/form-data');
     const data=new FormData();
-    // fileName:string=JwtToken.username+"/file";
-    // data.set('file)
     this.event=event;
     console.log(this.file)
 
@@ -67,137 +66,39 @@ event:any;
       console.log(data);
     });
   }}
-
   }
      
-  //  image : any;   
-  // private readonly imageType : string = 'data:image/PNG;base64,'; 
-  //  imageString!:string;
-// imageFile!:Blob;
-getFile()
-{
-  var t='Bearer '+JwtToken.jwt;
-  let headers = new HttpHeaders().set("Authorization", t);
-  this.http.post("http://localhost:8080/student/files/"+JwtToken.username+"/"+this.fileName,"",{headers:headers}).subscribe((data:any)=>{
-   if(data!=null){
-    const byteCharacters = atob(data.base64);
-const byteNumbers = new Array(byteCharacters.length);
-for (let i = 0; i < byteCharacters.length; i++) {
-  byteNumbers[i] = byteCharacters.charCodeAt(i);
-}
-const byteArray = new Uint8Array(byteNumbers);
-const blob = new Blob([byteArray], {type: data.type });//'image/png'
- var reader = new FileReader();
-  reader.readAsDataURL(blob);//this.event.target.files[0]);
-  
-  reader.onload = (_event) => {
-    // this.msg = "";
-    this.url = reader.result; 
-}}
-else
- window.alert("File not uploaded");
-});}}
-
-
-
-
-
-
-
-
-
-
-//     let imageBase64String= btoa(data);
-// this.imageString='data:image/PNG;base64, '+imageBase64String;
-//     console.log(data);
-
-  // var reader = new FileReader();
-  // reader.readAsDataURL(this.imageFile);//this.event.target.files[0]);
-  
-  // reader.onload = (_event) => {
-  //   // this.msg = "";
-  //   this.url = reader.result; 
-  
-  // this.router.navigate(['/student/retrieveFile']);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// selectedFile= null;
-  // file!: File;
-  // currentFileUpload: any ;
-  // progress: { percentage: number } = { percentage: 0 };
-  // selectedFiles!: FileList;
-  // changeImage = false;
- 
-//   handleFileInput(files: FileList) {
-//     this.fileToUpload = files.item(0);
-// }
-// uploadFileToActivity() {
-//   this.fileUploadService.postFile(this.fileToUpload).subscribe(data => {
-//     // do something, if upload success
-//     }, error => {
-//       console.log(error);
-//     });
-// }
-  // downloadFile(){
-  //   const link = document.createElement('a');
-  //   link.setAttribute('target', '_blank');
-  //   link.setAttribute('href', '_File_Saved_Path');
-  //   link.setAttribute('download', 'file_name.pdf');
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   link.remove();
-  // }
-  // change($event:any) {
-  //   this.changeImage = true;
-  // }
-  // changedImage(event:any) {
-  //   this.selectedFile = event.target.files[0];
-  // }
-  // upload() {
-  //   this.progress.percentage = 0;
-  //   this.currentFileUpload = this.selectedFiles.item(0);
-//this.pushFileToStorage().subscribe((event: { type: any; loaded: number; total: number; }) => 
-//{
-    //   if (event.type === HttpEventType.UploadProgress) {
-    //     this.progress.percentage = Math.round(100 * event.loaded / event.total);
-    //   } else if (event instanceof HttpResponse) {
-    //      alert('File Successfully Uploaded');
-    //   }
+  getFile() {
+    var t='Bearer '+JwtToken.jwt;
+    let headers = new HttpHeaders().set("Authorization", t);
+    this.http.post("http://localhost:8080/student/files/"+JwtToken.username+"/"+this.fileName,"",{headers:headers}).subscribe((data:any)=>{
+     if(data!=null){
+      const byteCharacters = atob(data.base64);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], {type: data.type });
+      var reader = new FileReader();
+      reader.readAsDataURL(blob);
       
-    //  }
-    // );
-  
+      reader.onload = (_event) => {
+        this.url = reader.result; 
+      }
+    }
+    else
+      window.alert("File not uploaded");
+    });
+  }
 
-  // pushFileToStorage(){}
-  // selectFile(event:any) {
-  //   this.selectedFiles = event.target.files;
-  // }
+  copyToClipboard(text: string) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert('Link copied to clipboard!');
+    }, (err) => {
+      console.error('Could not copy text: ', err);
+    });
+  }
+}
 
-  // ngOnInit(): void {
-  // }
-  // submit()
-  // {
-  //   let obj:any={
-  //     "file":this.file
-  //   }
- 
 

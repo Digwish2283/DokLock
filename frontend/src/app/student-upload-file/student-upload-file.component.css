@@ -95,3 +95,78 @@ input[type="file"] {
     width: 70%;
   }
 }
+
+.file-upload-container {
+  border: 2px dashed var(--divider-color);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.file-upload-container:hover {
+  border-color: var(--primary-color);
+  background-color: rgba(63, 81, 181, 0.05);
+}
+
+.preview-container {
+  margin-top: 20px;
+}
+
+.preview-image {
+  display: flex;
+  justify-content: center;
+  background-color: var(--card-color);
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.preview-image img {
+  max-width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.document-search {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.document-search select {
+  flex: 1;
+}
+
+.share-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.link-text {
+  font-size: 0.9em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+  .document-search {
+    flex-direction: column;
+  }
+  
+  .share-link {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

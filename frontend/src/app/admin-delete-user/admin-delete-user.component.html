@@ -1,18 +1,46 @@
-<table border="1">
-    <tr>
-        <th>SN</th>
-        <th>Name</th>
-        <th>Role</th>
-        <th>Update</th>
-    </tr>
-    <tr *ngFor="let user of users; index as i">
-        <td>{{i+1}}</td>
-        <td>{{user.username}}</td>
-        <td><select [(ngModel)]="user.status">
-            <option  value=true>Active</option>
-            <option  value=false>Blocked</option>
-        </select></td>
-        <td><button [disabled]="disable" (click)="update(user.username,user.status)">Update</button></td>
-    </tr>
-</table>
+<div class="card">
+  <div class="card-header">
+    <h2>User Account Management</h2>
+    <p class="subtitle">Activate or block user accounts as needed</p>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Username</th>
+          <th>Account Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; index as i">
+          <td>{{i+1}}</td>
+          <td>{{user.username}}</td>
+          <td>
+            <select class="form-control status-select" [(ngModel)]="user.status">
+              <option [ngValue]="true">Active</option>
+              <option [ngValue]="false">Blocked</option>
+            </select>
+          </td>
+          <td>
+            <button class="btn" [ngClass]="{'btn-primary': user.status, 'btn-accent': !user.status}" [disabled]="disable" (click)="update(user.username,user.status)">
+              <span *ngIf="!disable">Update</span>
+              <span *ngIf="disable">Processing...</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="data" class="alert" [ngClass]="{'alert-success': data.includes('updated'), 'alert-error': data.includes('error')}">
+    {{ data }}
+  </div>
+  
+  <div *ngIf="users.length === 0" class="empty-state">
+    <p>No users found in the system</p>
+  </div>
+</div>
 

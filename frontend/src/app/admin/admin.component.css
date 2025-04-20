@@ -1,0 +1,74 @@
+.admin-container {
+  display: flex;
+  min-height: calc(100vh - 56px);
+  background-color: var(--background-color);
+}
+
+.admin-sidebar {
+  width: 250px;
+  background-color: var(--card-color);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 20px 0;
+}
+
+.admin-menu {
+  padding: 0 20px;
+}
+
+.admin-menu h3 {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.admin-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-menu-item:hover {
+  background-color: rgba(63, 81, 181, 0.08);
+}
+
+.admin-menu-item.active {
+  background-color: rgba(63, 81, 181, 0.15);
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.admin-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .admin-container {
+    flex-direction: column;
+  }
+  
+  .admin-sidebar {
+    width: 100%;
+    padding: 10px 0;
+  }
+  
+  .admin-menu {
+    padding: 0 10px;
+  }
+  
+  .admin-content {
+    padding: 15px;
+  }
+}

@@ -1,10 +1,47 @@
-<header>DLocker - A Digital Locker</header>
-{{ data }}
-<label>Email</label><input type="email" [(ngModel)]="email" /><br />
-<label>Username</label><input type="text" [(ngModel)]="username" /><br />
-<label>Password</label><input type="password" [(ngModel)]="password" /><br />
+<div class="register-container">
+  <div class="app-header">
+    <div class="app-title">DokLock - A Digital Locker</div>
+  </div>
 
-<button (click)="register()">Register</button><br />
-<hr />
-<button [routerLink]="['verifyEmail']">Verify Email</button>
-<router-outlet></router-outlet>
+  <div class="container">
+    <div class="card register-card">
+      <h2 class="text-center">Create Account</h2>
+      
+      <div *ngIf="data" class="alert" [class.alert-error]="data.includes('already')" [class.alert-success]="data.includes('Registered')">
+        {{ data }}
+      </div>
+      
+      <form>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Enter your email">
+          <small class="form-text text-muted">We'll send a verification code to this email</small>
+        </div>
+        
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" class="form-control" [(ngModel)]="username" name="username" placeholder="Choose a username">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" [(ngModel)]="password" name="password" placeholder="Create a password">
+          <small class="form-text text-muted">Use a strong password with at least 8 characters</small>
+        </div>
+        
+        <div class="button-group">
+          <button class="btn btn-primary" (click)="register()">Register</button>
+          <button class="btn btn-outline" [routerLink]="['/']">Back to Login</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card mt-3">
+      <h3>Verify Your Email</h3>
+      <p>Already registered? Verify your email to activate your account.</p>
+      <button class="btn btn-accent" [routerLink]="['verifyEmail']">Verify Email</button>
+    </div>
+  </div>
+  
+  <router-outlet></router-outlet>
+</div>

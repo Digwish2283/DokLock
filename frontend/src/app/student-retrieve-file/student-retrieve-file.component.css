@@ -1,0 +1,40 @@
+.document-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.document-preview {
+  background-color: var(--background-color);
+  padding: 16px;
+  border-radius: 8px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.document-image {
+  max-width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.document-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.no-document {
+  padding: 40px 0;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .document-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+}

@@ -22,10 +22,11 @@ body {
 }
 
 label {
-  font-size: 1.5rem;
-  /* font-weight: bold; */
+  font-size: 1rem;
+  font-weight: 500;
   display: block;
-  padding: 1rem 0 0 0;
+  margin-bottom: 8px;
+  color: var(--text-primary);
 }
 
 header {
@@ -79,4 +80,78 @@ button {
 button:hover {
   background-color: #3087d7;
   color: white;
+}
+
+.register-container {
+  min-height: 100vh;
+  background-color: var(--background-color);
+}
+
+.register-card {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 30px;
+}
+
+.form-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.alert {
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.alert-error {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--error-color);
+  border-left: 4px solid var(--error-color);
+}
+
+.alert-success {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--success-color);
+  border-left: 4px solid var(--success-color);
+}
+
+/* Fix input styling */
+.form-control {
+  width: 100% !important;
+  box-sizing: border-box;
+  border: 1px solid var(--divider-color);
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 12px 15px;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .register-card {
+    margin: 10px;
+    padding: 20px;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
 }

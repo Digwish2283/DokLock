@@ -1,54 +1,88 @@
-<header>DLocker - A Digital Locker</header>
-<div class="upload-file">
-  <select [(ngModel)]="fileName">
-    <option value="SSC">SSC Marksheet</option>
-    <option value="HSC">HSC Marksheet</option>
-    <option value="Diploma">Diploma Marksheet</option>
-    <option value="Bachelors">Bachelors Marksheet</option>
-    <option value="Masters">Masters Marksheet</option>
-  </select>
-  <h5 style="color: red">Only .jpg,.jpeg,.png allowed</h5>
-  <input
-    type="file"
-    accept="file_extension|image/jpg"
-    data-max-size="1"
-    (change)="submit($event)"
-  />
-</div>
-<!--<button [disabled]="flag"></button>
-<label>File</label><input type="file" > [(ngModel)]="file">        (change)="selectFile($event.target.file)""selectFile($event)"[(ngModel)]="file">-->
-<br /><br />
-<img
-  [src]="url"
-  *ngIf="url"
-  width="800px"
-  height="400px"
-  style="image-rendering: optimizeQuality"
-/>
-<hr />
+<div class="container">
+  <!-- Upload Document Section -->
+  <div class="card">
+    <h2>Upload Documents</h2>
+    <div class="form-group">
+      <label>Document Type</label>
+      <select class="form-control" [(ngModel)]="fileName">
+        <option value="SSC">SSC Marksheet</option>
+        <option value="HSC">HSC Marksheet</option>
+        <option value="Diploma">Diploma Marksheet</option>
+        <option value="Bachelors">Bachelors Marksheet</option>
+        <option value="Masters">Masters Marksheet</option>
+        <option value="AadharCard">Aadhar Card</option>
+        <option value="IncomeCertificate">Income Certificate</option>
+      </select>
+    </div>
 
-<h3>Display the file</h3>
-<select [(ngModel)]="fileName">
-  <option value="SSC">SSC Marksheet</option>
-  <option value="HSC">HSC Marksheet</option>
-  <option value="Diploma">Diploma Marksheet</option>
-  <option value="Bachelors">Bachelors Marksheet</option>
-  <option value="Masters">Masters Marksheet</option>
-</select>
-<button (click)="getFile()">Get</button>
-<br />
-<hr />
-<table border="1" id="studentinfo">
-  <tr>
-    <th>SN</th>
-    <th>FileName</th>
-    <th>Verified</th>
-    <th>Link</th>
-  </tr>
-  <tr *ngFor="let files of filesArr; index as i">
-    <td>{{ i + 1 }}</td>
-    <td>{{ files.filename }}</td>
-    <td>{{ files.status }}</td>
-    <td *ngIf="files.status">{{ files.link }}</td>
-  </tr>
-</table>
+    <div class="form-group">
+      <label>Choose File</label>
+      <div class="file-upload-container">
+        <input type="file" class="form-control-file" (change)="submit($event)" accept="image/jpeg,image/jpg,image/png">
+        <small class="text-danger">Only .jpg, .jpeg, .png formats allowed</small>
+      </div>
+    </div>
+
+    <div class="preview-container mt-3" *ngIf="url">
+      <h3>Document Preview</h3>
+      <div class="preview-image">
+        <img [src]="url" alt="Document Preview">
+      </div>
+    </div>
+  </div>
+
+  <!-- View Documents Section -->
+  <div class="card mt-3">
+    <h2>My Documents</h2>
+    <div class="form-group">
+      <label>Select Document to View</label>
+      <div class="document-search">
+        <select class="form-control" [(ngModel)]="fileName">
+          <option value="SSC">SSC Marksheet</option>
+          <option value="HSC">HSC Marksheet</option>
+          <option value="Diploma">Diploma Marksheet</option>
+          <option value="Bachelors">Bachelors Marksheet</option>
+          <option value="Masters">Masters Marksheet</option>
+          <option value="AadharCard">Aadhar Card</option>
+          <option value="IncomeCertificate">Income Certificate</option>
+        </select>
+        <button class="btn btn-primary" (click)="getFile()">View Document</button>
+      </div>
+    </div>
+
+    <div class="table-responsive mt-3">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Document Type</th>
+            <th>Verification Status</th>
+            <th>Shareable Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let files of filesArr; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ files.filename }}</td>
+            <td>
+              <span class="badge" [ngClass]="files.status ? 'badge-success' : 'badge-warning'">
+                {{ files.status ? 'Verified' : 'Pending' }}
+              </span>
+            </td>
+            <td *ngIf="files.status">
+              <div class="share-link">
+                <span class="link-text">{{ files.link }}</span>
+                <button class="btn btn-outline btn-sm" (click)="copyToClipboard(files.link)">
+                  Copy Link
+                </button>
+              </div>
+            </td>
+            <td *ngIf="!files.status">
+              <span class="text-secondary">Available after verification</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
