@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Data } from '../data';
 import { Files } from '../files';
 import { JwtToken } from '../jwt-token';
+import { JwtService } from '../services/jwt.service';
 
 @Component({
   selector: 'app-student-upload-file',
@@ -16,14 +17,18 @@ export class StudentUploadFileComponent implements OnInit {
     static fileN:string="";
     flag:boolean=true;
     url:any;
-    filesArr:Data[]=[];
-  constructor(private http:HttpClient, private router:Router){
-
-    var t='Bearer '+JwtToken.jwt;
+    filesArr:Data[]=[];  constructor(
+    private http: HttpClient, 
+    private router: Router,
+    private jwtService: JwtService
+  ){
+    // Use the new JWT service while maintaining backward compatibility
+    var t='Bearer '+ (this.jwtService.getToken() || JwtToken.jwt);
     let headers = new HttpHeaders().set("Authorization", t);
-    console.log(JwtToken.username +"us");
-    http.post("http://localhost:8080/student/getFiles/"+JwtToken.username,"",{headers:headers}).subscribe((data:any)=>{
-      this.filesArr=Object.values(data) ;
+    const username = this.jwtService.getUsername() || JwtToken.username;
+    console.log(username + " us");
+    http.post("http://localhost:8080/student/getFiles/" + username, "", {headers:headers}).subscribe((data:any)=>{
+      this.filesArr=Object.values(data);
     });
   }
   

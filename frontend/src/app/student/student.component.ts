@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JwtService } from '../services/jwt.service';
 
 @Component({
   selector: 'app-student',
@@ -8,11 +9,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class StudentComponent implements OnInit {
 
-  constructor(private route: Router) { 
+  constructor(
+    private route: Router,
+    private jwtService: JwtService
+  ) { 
     route.navigate(['/student/uploadFile']);
   }
 
   ngOnInit(): void {
+  }
+
+  logout(): void {
+    this.jwtService.clearAuth();
+    this.route.navigate(['/']);
   }
 
 }

@@ -11,10 +11,11 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,12 +39,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 //Access only to localhost, strong pass, limit access to few hosts, change port and do not use root 
 //@PreAuthorize("hasRole('user')")
-
  @RestController
  @CrossOrigin
 public class Controller {
-//	@Autowired
-//	private AuthenticationManager authenticationManager;
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Value("${app.email.enabled:false}")
     private boolean isEmailEnabled;
@@ -59,13 +59,9 @@ public class Controller {
 	
 	@Autowired
 	private UserRepository repo;
-	
-	@Autowired
+		@Autowired
 	private DataRepository dRepo;
 	
-	@Autowired
-    private ResourceLoader resourceLoader;
-    
     @Value("${user.dir:#{systemProperties['user.dir']}}")
     private String projectRootPath;
     
@@ -223,21 +219,14 @@ public class Controller {
 		us.setPassword(BCrypt.hashpw(us.getPassword(), BCrypt.gensalt()));
 		repo.setPassword(us.getEmail(),us.getPassword());
 		return "password updated"; 
-	}
-	//ResponseEntity<?>
-	@RequestMapping(value="/authenticate", method = RequestMethod.POST)
+	}	@RequestMapping(value="/authenticate", method = RequestMethod.POST)
 	public Token  createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws  Exception{
 		String error = null;
 		try 
 		{
-			User user=repo.findByUsername(authenticationRequest.getUsername());
-			if(user==null || !BCrypt.checkpw(authenticationRequest.getPassword(), user.getPassword()))
-				{
-					error="Incorrect username or password";
-					throw new BadCredentialsException("Incorrect username or password");
-				}
-//			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-//					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+			// Use Spring Security's authentication manager for better security
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+					authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 		}catch (BadCredentialsException e) {
 			error="Incorrect username or password";
 			throw new Exception("Incorrect username or password");
@@ -246,13 +235,12 @@ public class Controller {
 				.loadUserByUsername(authenticationRequest.getUsername());
 		User us=repo.findByUsername(authenticationRequest.getUsername());
 		if(!us.getStatus())
-			error="Account blocked";//(ResponseEntity<?>) ResponseEntity.ok("Account blocked");
+			error="Account blocked";
 		if(us.getAuthentication()==0)
-			error="Verify your email";//return (ResponseEntity<?>) ResponseEntity.ok("Verify your email");
+			error="Verify your email";
 		String jwt="";
 		if(error==null)
 			jwt = jwtTokenUtil.generateToken(userDetails);
-		
 		
 		return new Token(error,jwt,us.getRole());
 	}

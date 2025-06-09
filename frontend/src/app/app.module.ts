@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,13 +21,20 @@ import { StudentUploadFileComponent } from './student-upload-file/student-upload
 import { StudentRetrieveFileComponent } from './student-retrieve-file/student-retrieve-file.component';
 import { StudentShareFileComponent } from './student-share-file/student-share-file.component';
 
+// Import new services and guards
+import { JwtService } from './services/jwt.service';
+import { ApiService } from './services/api.service';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { AuthGuard } from './guards/auth.guard';
+
 const appRoutes: Routes = [
   {path: '', component: LoginComponent ,children:[{path:'changePassword', component:ChangePasswordComponent}]},
   {path:'register', component:RegisterComponent, children:[{path:'verifyEmail',component:VerifyEmailComponent}] },
-  {path:'student',component:StudentComponent, children:[{path:'uploadFile',component:StudentUploadFileComponent},
+  {path:'student',component:StudentComponent, canActivate: [AuthGuard], data: { role: 'ROLE_stu' }, children:[{path:'uploadFile',component:StudentUploadFileComponent},
                                                         {path:'retrieveFile', component:StudentRetrieveFileComponent}]},
-  {path:'staff', component:StaffComponent},
-  {path:'admin', component:AdminComponent, children: [{path:'changeRole', component:AdminChangeRoleComponent}, 
+  {path:'staff', component:StaffComponent, canActivate: [AuthGuard], data: { role: 'ROLE_staff' }},
+  {path:'admin', component:AdminComponent, canActivate: [AuthGuard], data: { role: 'ROLE_admin' }, children: [{path:'changeRole', component:AdminChangeRoleComponent}, 
                                                       {path:'deleteUser', component:AdminDeleteUserComponent}]},
   {path:'shareFile/:name/:file', component:StudentShareFileComponent}]
  
@@ -51,9 +59,20 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule,RouterModule.forRoot(appRoutes)
+    AppRoutingModule,RouterModule.forRoot(appRoutes)  ],  providers: [
+    JwtService,
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 

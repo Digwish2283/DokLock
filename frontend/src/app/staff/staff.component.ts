@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Data } from '../data';
 import { JwtToken } from '../jwt-token';
+import { JwtService } from '../services/jwt.service';
 
 @Component({
   selector: 'app-staff',
@@ -12,7 +14,11 @@ export class StaffComponent implements OnInit {
 username:string="";
 url:any;
 filesArr:any=[];
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private jwtService: JwtService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -80,6 +86,11 @@ else
     let headers = new HttpHeaders().set("Authorization", t);
     this.http.post("http://localhost:8080/staff/changeStatus/"+username+"/"+filename+"/"+status,"",{headers:headers}).subscribe(()=>{
     });
+  }
+
+  logout(): void {
+    this.jwtService.clearAuth();
+    this.router.navigate(['/']);
   }
 
 }

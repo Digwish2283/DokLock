@@ -3,9 +3,8 @@
   <div class="nav-tabs">
     <button class="btn btn-outline mr-1" [routerLink]="['uploadFile']">Upload Documents</button>
     <button class="btn btn-outline" [routerLink]="['retrieveFile']">View Documents</button>
-  </div>
-  <div>
-    <button class="btn btn-accent" [routerLink]="['/']">Logout</button>
+  </div>  <div>
+    <button class="btn btn-accent" (click)="logout()">Logout</button>
   </div>
 </div>
 
