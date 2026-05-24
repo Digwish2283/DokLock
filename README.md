@@ -1,5 +1,5 @@
-# DLocker - A Digital Locker for Institutional Level 
-DLocker is a Digital Locker for Students to ease out carrying documents for offical needs and other purposes completely. Dlocker provides the safe, secure service to store, verify and share the documents all from same paltform.
+# DokLock - A Digital Locker for Institutional Level 
+DokLock is a Digital Locker for Students to ease out carrying documents for offical needs and other purposes completely. Dlocker provides the safe, secure service to store, verify and share the documents all from same paltform.
 
 ![GitHub](https://img.shields.io/github/license/mohitkhedkar/DLocker?style=for-the-badge&color=orange)
 ![GitHub last commit](https://img.shields.io/github/last-commit/mohitkhedkar/DLocker?style=for-the-badge&color=mediumgreen)
@@ -21,13 +21,6 @@ DLocker is a Digital Locker for Students to ease out carrying documents for offi
 
 ### Student PAGE: 
 ![](/screenshots/student.JPG)
-
-
-### Contibutors
-1. [Mohit Khedkar](https://github.com/mohitkhedkar).
-2. [Rutuja Kondhare](https://github.com/rutujak11).
-3. [Ankan Biswas](https://github.com/mohitkhedkar/DLocker).
-4. [Shreya Paramane](https://github.com/ShreyaParamne).
 
 
 ## License 
