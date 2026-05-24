@@ -7,8 +7,6 @@ DLocker is a Digital Locker for Students to ease out carrying documents for offi
 [![Netlify Status](https://api.netlify.com/api/v1/badges/96908218-088c-4358-ae77-fd11a6335946/deploy-status)](https://app.netlify.com/sites/dlocker/deploys)
 
 
-## website link:-  https://dlocker.netlify.app/
-
 ### LOGIN PAGE: 
 ![](/screenshots/login.JPG)
 
